@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WASD Game</title>
+<style>
+    #player {
+        width: 20px;
+        height: 20px;
+        background-color: blue;
+        border-radius: 50%; /* 円形にするための border-radius */
+        position: absolute;
+    }
+</style>
+</head>
+<body>
+
+<div id="player"></div>
+
+<script>
+    // 初期位置
+    let x = 0;
+    let y = 0;
+
+    // プレイヤー要素を取得
+    const player = document.getElementById('player');
+
+    // キーダウンイベントのリスナーを追加
+    document.addEventListener('keydown', (event) => {
+        const key = event.key;
+        switch (key) {
+            case 'w':
+                y -= 10;
+                break;
+            case 'a':
+                x -=
