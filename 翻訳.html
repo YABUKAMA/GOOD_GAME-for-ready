@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation and Dictionary Site</title>
+    <style>
+        /* スタイルはここに記述 */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+        }
+        textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #translatedText {
+            margin-top: 20px;
+        }
+        #wordMeanings {
+            margin-top: 20px;
+        }
+        #wordMeanings p {
+            margin-bottom: 10px;
+        }
+        #wordMeanings b {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>翻訳と辞書サイト</h1>
+    <label for="originalText">翻訳するテキスト：</label><br>
+    <textarea id="originalText" rows="4" cols="50"></textarea><br>
+    <button onclick="translateAndDefine()">翻訳と定義を表示</button><br>
+    <div id="translatedText"></div>
+    <div id="wordMeanings"></div>
+
+    <script>
+        function translateAndDefine() {
+            var originalText = document.getElementById("originalText").value;
+            var translatedText = originalText.replace(/Hello/g, "Bonjour");
+            document.getElementById("translatedText").innerHTML = translatedText;
+
+            fetch("https://wordsapiv1.p.rapidapi.com/words/" + originalText, {
+                "method": "GET",
+                "headers": {
+                    "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
+                    "x-rapidapi-key": "YOUR_API_KEY"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                var meanings = data.results;
+                var meaningsHTML = "<h3>単語の意味と例文</h3>";
+                for (var i = 0; i < meanings.length; i++) {
+                    meaningsHTML += "<p><b>意味: </b>" + meanings[i].definition + "</p>";
+                    if (meanings[i].examples) {
+                        meaningsHTML += "<p><b>例文: </b>" + meanings[i].examples[0] + "</p>";
+                    }
+                }
+                document.getElementById("wordMeanings").innerHTML = meaningsHTML;
+            })
+            .catch(err => {
+                console.error(err);
+            });
+        }
+    </script>
+</body>
+</html>
