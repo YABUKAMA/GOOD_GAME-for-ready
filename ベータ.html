@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Selection Lobby</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        .lobby-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .room-button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .room-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="lobby-container">
+        <h1>Welcome to the Room Selection Lobby</h1>
+        <p>Select a room:</p>
+        <button class="room-button" onclick="enterRoom(1)">Room 1</button>
+        <button class="room-button" onclick="enterRoom(2)">Room 2</button>
+        <button class="room-button" onclick="enterRoom(3)">Room 3</button>
+    </div>
+
+    <script>
+        function enterRoom(roomNumber) {
+            // 選択された部屋に応じて処理を追加
+            switch (roomNumber) {
+                case 1:
+                    // Room 1の処理を追加する
+                    console.log('Entered Room 1');
+                    break;
+                case 2:
+                    // Room 2の処理を追加する
+                    console.log('Entered Room 2');
+                    break;
+                case 3:
+                    // Room 3の処理を追加する
+                    console.log('Entered Room 3');
+                    break;
+                default:
+                    console.error('Invalid room number');
+            }
+        }
+    </script>
+</body>
+</html>
