@@ -3,64 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Selection Lobby</title>
+    <title>Battle Royale Map</title>
     <style>
         body {
             margin: 0;
             overflow: hidden;
-            font-family: Arial, sans-serif;
         }
-        .lobby-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-        .room-button {
-            margin: 10px;
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .room-button:hover {
-            background-color: #45a049;
+        canvas {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="lobby-container">
-        <h1>Welcome to the Room Selection Lobby</h1>
-        <p>Select a room:</p>
-        <button class="room-button" onclick="enterRoom(1)">Room 1</button>
-        <button class="room-button" onclick="enterRoom(2)">Room 2</button>
-        <button class="room-button" onclick="enterRoom(3)">Room 3</button>
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script>
-        function enterRoom(roomNumber) {
-            // 選択された部屋に応じて処理を追加
-            switch (roomNumber) {
-                case 1:
-                    // Room 1の処理を追加する
-                    console.log('Entered Room 1');
-                    break;
-                case 2:
-                    // Room 2の処理を追加する
-                    console.log('Entered Room 2');
-                    break;
-                case 3:
-                    // Room 3の処理を追加する
-                    console.log('Entered Room 3');
-                    break;
-                default:
-                    console.error('Invalid room number');
-            }
+        var scene, camera, renderer;
+
+        function init() {
+            // シーンを作成
+            scene
+= new THREE.Scene();
+
+            // カメラを作成
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 20, 50);
+            camera.lookAt(0, 0, 0);
+
+            // レンダラーを作成
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            // 地面を作成
+            var groundGeometry = new THREE.PlaneGeometry(100, 100, 10, 10);
+            var groundMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, side: THREE.DoubleSide });
+            var ground = new THREE.Mesh(groundGeometry, groundMaterial);
+            ground.rotation.x = Math.PI / 2;
+            scene.add(ground);
+
+            // 建物を作成
+            var buildingGeometry = new THREE.BoxGeometry(10, 20, 10);
+            var buildingMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+            var building1 = new THREE.Mesh(buildingGeometry, buildingMaterial);
+            building1.position.set(15, 10, 15);
+            scene.add(building1);
+
+            var building2 = new THREE.Mesh(buildingGeometry, buildingMaterial);
+            building2.position.set(-15, 10, -15);
+            scene.add(building2);
+
+            // ライトを追加
+            var ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight.position.set(0, 50, 0);
+            scene.add(directionalLight);
+
+            animate();
         }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        window.onload = init;
     </script>
 </body>
 </html>
